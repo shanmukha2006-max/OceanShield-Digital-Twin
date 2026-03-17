@@ -36,6 +36,7 @@ app.add_middleware(
         "http://localhost:5174",
         "http://localhost:5175",
         "http://localhost:3000",
+        "https://shanmukha2006-max.github.io",
     ],
     allow_credentials=True,
     allow_methods=["*"],

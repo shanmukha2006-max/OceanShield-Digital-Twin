@@ -1,6 +1,24 @@
 import axios from 'axios'
 
-const API_BASE_URL = 'http://localhost:8000/api'
+// Determine API URL based on environment
+let API_URL
+
+if (import.meta.env.VITE_API_URL) {
+  // Use explicitly set environment variable if available
+  API_URL = import.meta.env.VITE_API_URL
+} else if (window.location.origin.includes('github.io')) {
+  // On GitHub Pages, we need a production backend - check sessionStorage first
+  API_URL = sessionStorage.getItem('oceanshield_api_url') || null
+  if (!API_URL) {
+    console.warn('No backend API URL configured for GitHub Pages deployment. Using localhost as fallback.')
+    API_URL = 'http://localhost:8000'
+  }
+} else {
+  // Local development - use localhost
+  API_URL = 'http://localhost:8000'
+}
+
+const API_BASE_URL = `${API_URL}/api`
 
 // Create axios instance with default config
 const api = axios.create({
